@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextViewDelegate {
+class LoginViewController: UIViewController {
     
     @IBOutlet weak var fldUsername: UITextField!
     @IBOutlet weak var fldPassword: UITextField!
@@ -35,7 +35,7 @@ class LoginViewController: UIViewController, UITextViewDelegate {
         UIView.animateWithDuration(0.5) { () -> Void in
             self.fldUsername.center.x += self.view.bounds.width
         }
-        UIView.animateWithDuration(0.5, delay: 0.2, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, delay: 0.2, options: [], animations: { () -> Void in
             self.fldPassword.center.x += self.view.bounds.width
             self.btnLogin.alpha = 1
         }) { (Bool) -> Void in
@@ -72,7 +72,7 @@ class LoginViewController: UIViewController, UITextViewDelegate {
 
             logicBtnAnimation.cancelAnimationChain() {
 
-                UIView.animateAndChainWithDuration(0.33, delay: 0, options: nil, animations: {
+                UIView.animateAndChainWithDuration(0.33, delay: 0, options: [], animations: {
                     self.btnLogin.transform = CGAffineTransformMakeScale(0.01, 0.01)
                     }, completion: nil)
 
@@ -96,7 +96,7 @@ class LoginViewController: UIViewController, UITextViewDelegate {
         img.frame = imgBackground.frame
         view.insertSubview(img, aboveSubview: imgBackground)
 
-        UIView.animateWithDuration(5, delay: 0.5, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(5, delay: 0.5, options: [], animations: { () -> Void in
             img.alpha = 0
         }, completion: { _ in
             img.removeFromSuperview()
@@ -106,9 +106,9 @@ class LoginViewController: UIViewController, UITextViewDelegate {
 
 extension LoginViewController: UITextViewDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
-        if count(textField.text) < 5 {
+        if textField.text!.characters.count < 5 {
             textField.center.x += 1
-            UIView.animateWithDuration(3, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 250, options: nil, animations: { () -> Void in
+            UIView.animateWithDuration(3, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 250, options: [], animations: { () -> Void in
 
                 textField.center.x -= 1
 
@@ -122,7 +122,7 @@ extension LoginViewController: StarterProjectCode {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        skipIfSeen(self, "OnBoardingViewController")
+        skipIfSeen(self, nextIdentifier: "OnBoardingViewController")
         
         btnLogin.layer.borderColor = UIColor(red: 20/255.0, green: 123/255.0, blue: 195/255.0, alpha: 1.0).CGColor
         btnLogin.layer.cornerRadius = 40
@@ -130,6 +130,6 @@ extension LoginViewController: StarterProjectCode {
     
     func actionShowOnboarding() {
         self.performSegueWithIdentifier("showOnBoarding", sender: self.btnLogin)
-        markAsSeen(self, true)
+        markAsSeen(self, seen: true)
     }
 }

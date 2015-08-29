@@ -15,7 +15,7 @@
 
 import UIKit
 
-class RBBSpringAnimation: CAKeyframeAnimation, NSCopying {
+class RBBSpringAnimation: CAKeyframeAnimation {
     
     var damping: Double = 0.01
     var velocity: Double = 0.0
@@ -50,7 +50,7 @@ class RBBSpringAnimation: CAKeyframeAnimation, NSCopying {
         return result
     }()
     
-    override var values: [AnyObject]! {
+    override var values: [AnyObject]? {
         get {
             return blockArrayValues as [AnyObject]
         }
@@ -69,7 +69,7 @@ class RBBSpringAnimation: CAKeyframeAnimation, NSCopying {
         calculationMode = kCAAnimationDiscrete
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

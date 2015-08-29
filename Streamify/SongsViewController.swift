@@ -107,7 +107,7 @@ extension SongsViewController: UITableViewDataSource, UITableViewDelegate {
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("SongCell") as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("SongCell")!
             
             cell.textLabel!.text = "\(indexPath.row+1). " + playlist.songs[indexPath.row]
             

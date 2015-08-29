@@ -12,7 +12,7 @@ func skipIfSeen(sender: UIViewController, nextIdentifier: String) {
     let key = sender.classForCoder.description()
     let seen = NSUserDefaults.standardUserDefaults().boolForKey(key)
     if seen {
-        if let nextVC = sender.storyboard?.instantiateViewControllerWithIdentifier(nextIdentifier) as? UIViewController {
+        if let nextVC = sender.storyboard?.instantiateViewControllerWithIdentifier(nextIdentifier) {
             //println("seen \(key) skipping to \(nextIdentifier)")
             sender.navigationController?.pushViewController(nextVC, animated: false)
         }
@@ -25,7 +25,7 @@ func markAsSeen(sender: UIViewController, seen: Bool) {
     NSUserDefaults.standardUserDefaults().synchronize()
 }
 
-func delay(#seconds: Double, completion:()->()) {
+func delay(seconds seconds: Double, completion:()->()) {
     let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64( Double(NSEC_PER_SEC) * seconds ))
     
     dispatch_after(popTime, dispatch_get_main_queue()) {

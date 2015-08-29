@@ -50,8 +50,8 @@ extension PlaylistsViewController: StarterProjectCode {
     @IBAction func actionLogout(sender: AnyObject) {
         navigationController!.delegate = nil
         
-        markAsSeen(navigationController!.viewControllers[navigationController!.viewControllers.count-2] as! UIViewController, false)
-        markAsSeen(navigationController!.viewControllers.last as! UIViewController, false)
+        markAsSeen(navigationController!.viewControllers[navigationController!.viewControllers.count-2], seen: false)
+        markAsSeen(navigationController!.viewControllers.last!, seen: false)
         navigationController?.popToRootViewControllerAnimated(true)
     }
 }

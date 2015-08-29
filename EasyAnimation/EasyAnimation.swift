@@ -100,10 +100,10 @@ private let specializedLayerKeys: [String: [String]] = [
 
 public extension UIViewAnimationOptions {
     //CA Fill modes
-    static let FillModeNone = UIViewAnimationOptions(0)
-    static let FillModeForwards = UIViewAnimationOptions(1024)
-    static let FillModeBackwards = UIViewAnimationOptions(2048)
-    static let FillModeBoth = UIViewAnimationOptions(1024 + 2048)
+    static let FillModeNone = UIViewAnimationOptions(rawValue: 0)
+    static let FillModeForwards = UIViewAnimationOptions(rawValue: 1024)
+    static let FillModeBackwards = UIViewAnimationOptions(rawValue: 2048)
+    static let FillModeBoth = UIViewAnimationOptions(rawValue: 1024 + 2048)
 }
 
 /**
@@ -154,8 +154,8 @@ extension UIView {
         if let activeContext = activeAnimationContexts.last {
             if let result = result as? NSNull {
                 
-                if contains(vanillaLayerKeys, key) ||
-                    (specializedLayerKeys[layer.classForCoder.description()] != nil && contains(specializedLayerKeys[layer.classForCoder.description()]!, key)) {
+                if vanillaLayerKeys.contains(key) ||
+                    (specializedLayerKeys[layer.classForCoder.description()] != nil && (specializedLayerKeys[layer.classForCoder.description()]!).contains(key)) {
                         
                         var currentKeyValue: AnyObject? = layer.valueForKey(key)
                         
@@ -262,7 +262,7 @@ extension UIView {
     }
     
     class func EA_animateWithDuration(duration: NSTimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) {
-        animateWithDuration(duration, delay: 0.0, options: nil, animations: animations, completion: completion)
+        animateWithDuration(duration, delay: 0.0, options: [], animations: animations, completion: completion)
     }
     
     class func EA_animateWithDuration(duration: NSTimeInterval, animations: () -> Void) {
@@ -359,13 +359,13 @@ extension UIView {
     /**
     Creates and runs an animation which allows other animations to be chained to it and to each other.
     
-    :param: duration The animation duration in seconds
-    :param: delay The delay before the animation starts
-    :param: options A UIViewAnimationOptions bitmask (check UIView.animationWithDuration:delay:options:animations:completion: for more info)
-    :param: animations Animation closure
-    :param: completion Completion closure of type (Bool)->Void
+    - parameter duration: The animation duration in seconds
+    - parameter delay: The delay before the animation starts
+    - parameter options: A UIViewAnimationOptions bitmask (check UIView.animationWithDuration:delay:options:animations:completion: for more info)
+    - parameter animations: Animation closure
+    - parameter completion: Completion closure of type (Bool)->Void
     
-    :returns: The created request.
+    - returns: The created request.
     */
     public class func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
         
@@ -388,15 +388,15 @@ extension UIView {
     /**
     Creates and runs an animation which allows other animations to be chained to it and to each other.
     
-    :param: duration The animation duration in seconds
-    :param: delay The delay before the animation starts
-    :param: usingSpringWithDamping the spring damping
-    :param: initialSpringVelocity initial velocity of the animation
-    :param: options A UIViewAnimationOptions bitmask (check UIView.animationWithDuration:delay:options:animations:completion: for more info)
-    :param: animations Animation closure
-    :param: completion Completion closure of type (Bool)->Void
+    - parameter duration: The animation duration in seconds
+    - parameter delay: The delay before the animation starts
+    - parameter usingSpringWithDamping: the spring damping
+    - parameter initialSpringVelocity: initial velocity of the animation
+    - parameter options: A UIViewAnimationOptions bitmask (check UIView.animationWithDuration:delay:options:animations:completion: for more info)
+    - parameter animations: Animation closure
+    - parameter completion: Completion closure of type (Bool)->Void
     
-    :returns: The created request.
+    - returns: The created request.
     */
     public class func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
         
@@ -447,9 +447,9 @@ extension CALayer {
         
         //create a custom easy animation and add it to the animation stack
         if let activeContext = activeAnimationContexts.last where
-            contains(vanillaLayerKeys, key) ||
+            vanillaLayerKeys.contains(key) ||
                 (specializedLayerKeys[self.classForCoder.description()] != nil &&
-                    contains(specializedLayerKeys[self.classForCoder.description()]!, key)) {
+                    (specializedLayerKeys[self.classForCoder.description()]!).contains(key)) {
                         
                         var currentKeyValue: AnyObject? = valueForKey(key)
                         

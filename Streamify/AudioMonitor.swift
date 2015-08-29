@@ -27,7 +27,7 @@ class AudioMonitor: NSObject, AVAudioPlayerDelegate {
     stop()
     
     let fileURL = NSBundle.mainBundle().URLForResource(fileNamed, withExtension: nil)
-    player = AVAudioPlayer(contentsOfURL: fileURL, error: nil)
+    player = try? AVAudioPlayer(contentsOfURL: fileURL!)
     player?.meteringEnabled = true
     player?.delegate = self
     player?.play()
@@ -59,7 +59,7 @@ class AudioMonitor: NSObject, AVAudioPlayerDelegate {
   }
   
   //MARK: - AVAudioPlayerDelegate
-  func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+  func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
     didFinishPlaying?()
   }
 }

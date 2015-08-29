@@ -27,14 +27,14 @@ class OnBoardingViewController: UIViewController {
     var deselectCurrentView: (()->())?
 
     func showStartButton() {
-        startButton = UIButton.buttonWithType(.Custom) as! UIButton
+        startButton = UIButton(type: .Custom)
         startButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9)
         startButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         startButton.setTitle("Start", forState: .Normal)
         startButton.titleLabel?.font = UIFont.systemFontOfSize(22.0)
         startButton.layer.cornerRadius = listenView.bounds.size.width/6
         startButton.layer.masksToBounds = true
-        startButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        startButton.translatesAutoresizingMaskIntoConstraints = false
 
         startButton.addTarget(self, action: "actionStartListening:", forControlEvents: .TouchUpInside)
         
@@ -51,7 +51,7 @@ class OnBoardingViewController: UIViewController {
 
         startButton.layoutIfNeeded()
 
-        UIView.animateWithDuration(1.33, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: .BeginFromCurrentState | .AllowUserInteraction, animations: {
+        UIView.animateWithDuration(1.33, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [.BeginFromCurrentState, .AllowUserInteraction], animations: {
             conY.constant = 0.0
             self.startButton.layoutIfNeeded()
             }, completion: nil)
@@ -62,7 +62,7 @@ class OnBoardingViewController: UIViewController {
     }
 
     func adjustHeights(viewToSelect: UIView) {
-        for constraint in viewToSelect.superview!.constraints() as! [NSLayoutConstraint] {
+        for constraint in viewToSelect.superview!.constraints {
             if constraint.identifier == "StripHeight" {
                 constraint.active = false
 
@@ -86,7 +86,7 @@ class OnBoardingViewController: UIViewController {
 
         adjustHeights(tap.view!)
 
-        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -133,7 +133,7 @@ extension OnBoardingViewController: StarterProjectCode {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        skipIfSeen(self, "PlaylistsViewController")
+        skipIfSeen(self, nextIdentifier: "PlaylistsViewController")
         
         views = [signupView, mixView, listenView]
         
@@ -148,11 +148,11 @@ extension OnBoardingViewController: StarterProjectCode {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        markAsSeen(self, true)
+        markAsSeen(self, seen: true)
     }
     
     @IBAction func actionLogout(sender: AnyObject) {
         navigationController?.popToRootViewControllerAnimated(true)
-        markAsSeen(navigationController!.viewControllers.last as! UIViewController, false)
+        markAsSeen(navigationController!.viewControllers.last!, seen: false)
     }
 }
