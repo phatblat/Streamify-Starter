@@ -157,7 +157,7 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     
     private func detachFromChain() {
         self.nextDelayedAnimation = nil
-        if let previous = self.prevDelayedAnimation {
+        if let _ = self.prevDelayedAnimation {
             if debug {
                 print("dettach \(self)")
             }

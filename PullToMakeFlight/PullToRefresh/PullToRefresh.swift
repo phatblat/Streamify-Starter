@@ -165,7 +165,7 @@ public func ==(a: State, b: State) -> Bool {
     case (.Inital, .Inital): return true
     case (.Loading, .Loading): return true
     case (.Finished, .Finished): return true
-    case (.Releasing(let a), .Releasing(let b)): return true
+    case (.Releasing, .Releasing): return true
     default: return false
     }
 }

@@ -152,7 +152,7 @@ extension UIView {
         let result = EA_actionForLayer(layer, forKey: key)
         
         if let activeContext = activeAnimationContexts.last {
-            if let result = result as? NSNull {
+            if let _ = result as? NSNull {
                 
                 if vanillaLayerKeys.contains(key) ||
                     (specializedLayerKeys[layer.classForCoder.description()] != nil && (specializedLayerKeys[layer.classForCoder.description()]!).contains(key)) {
@@ -441,7 +441,7 @@ extension CALayer {
     public func EA_actionForKey(key: String!) -> CAAction! {
         
         //check if the layer has a view-delegate
-        if let delegate = delegate as? UIView {
+        if let _ = delegate as? UIView {
             return EA_actionForKey(key) // -> this passes the ball to UIView.actionForLayer:forKey:
         }
         
